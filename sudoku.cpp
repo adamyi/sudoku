@@ -77,9 +77,9 @@ void DFS( int i, int j )
             }
             printf("\n");
         }
-	t2 = clock();
-	float diff = ((float)(t2 - t1) / 1000000.0F ) * 1000;
-	printf("\nUsed time: %f milliseconds.\n", diff);
+        t2 = clock();
+        float diff = ((float)(t2 - t1) / 1000000.0F ) * 1000;
+        printf("\nUsed time: %f milliseconds.\n", diff);
         exit(0);
     }
     if ( x[i][j] != -1 )
@@ -108,20 +108,26 @@ void DFS( int i, int j )
     }
 }
 
+inline int getNumber(char buf)
+{
+   if (buf >= '0' && buf <= '9')
+       return buf - '1';
+   if (buf == '?' || buf == '.')
+       return -1;
+   return -2;
+}
+
 int main(int argc, const char *argv[])
 {
     memset(x, -1, sizeof(x));
     memset(a, 0, sizeof(a));
+    char buffer;
     for ( int i = 0 ; i < 9 ; i++ )
-    {
         for ( int j = 0 ; j < 9 ; j++ )
-        {
-            scanf("%d", &x[i][j]);
-            x[i][j]--;
-        }
-    }
+            for(fread(&buffer, sizeof(char), 1, stdin); (x[i][j] = getNumber(buffer)) == -2; fread(&buffer, sizeof(char), 1, stdin));
     t1 = clock();
     generateA();
     DFS(0, 0);
-    return 0;
+    printf("Solution not found.");
+    return -2;
 }
