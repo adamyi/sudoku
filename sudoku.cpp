@@ -3,10 +3,9 @@
 #include <string.h>
 #include <time.h>
 int x[9][9];
-bool a[9][9][9];
 clock_t t1, t2;
-
-void generateA()
+bool a[9][9][9];
+inline void generateA()
 {
     bool tmp[9];
     for ( int i = 0 ; i < 9 ; i++ )
@@ -49,7 +48,7 @@ void generateA()
     }
 }
 
-void generateAChanges(int m, int n)
+inline void generateAChanges(int m, int n)
 {
     bool tmp[9];
 

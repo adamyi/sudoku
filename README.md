@@ -33,6 +33,6 @@ Can also be inputed this way:
 
 ### Performance
 
-It uses avg 7 ms to solve evil-level problem sets generated on www.websudoku.com with a single-core 2.0GHz Skylake Xeon CPU.
+It uses avg 6.5 ms to solve evil-level problem sets generated on www.websudoku.com with a single-core 2.0GHz Skylake Xeon CPU.
 
 More detailed testing results will be added in the future.
