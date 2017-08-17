@@ -18,3 +18,9 @@ A highly efficient sudoku-solving program, open sourced under MIT license.
 ~~~~
 
 (0 stands for unknown, or to be filled)
+
+### Performance
+
+It uses avg 7 ms to solve evil-level problem sets generated on www.websudoku.com with a single-core 2.0GHz Skylake Xeon CPU.
+
+More detailed testing results will be added in the future.

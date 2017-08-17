@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 int x[9][9];
 bool a[9][9][9];
+clock_t t1, t2;
 
 void generateA()
 {
@@ -75,6 +77,9 @@ void DFS( int i, int j )
             }
             printf("\n");
         }
+	t2 = clock();
+	float diff = ((float)(t2 - t1) / 1000000.0F ) * 1000;
+	printf("\nUsed time: %f milliseconds.\n", diff);
         exit(0);
     }
     if ( x[i][j] != -1 )
@@ -115,6 +120,7 @@ int main(int argc, const char *argv[])
             x[i][j]--;
         }
     }
+    t1 = clock();
     generateA();
     DFS(0, 0);
     return 0;
