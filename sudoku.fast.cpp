@@ -3,7 +3,6 @@
 #include <string.h>
 #include <time.h>
 #include <bitset>
-#include <iostream>
 
 #ifdef WIN32 //putchar_unlocked does not exist in windows
 #define putchar_unlocked putchar
@@ -155,7 +154,7 @@ void DFS( int i )
 
 inline int getNumber(char buf)
 {
-    if (buf >= '0' && buf <= '9')
+    if (isdigit(buf))
         return buf - '1';
     if (buf == '?' || buf == '.')
         return -1;
