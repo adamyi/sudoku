@@ -1,7 +1,7 @@
 Sudoku
 ------
 
-A highly efficient sudoku-solving program, open sourced under MIT license.
+A highly efficient sudoku-solving program, open sourced under [CC0 1.0 Universal License (Public Domain)](LICENSE.md).
 
 ### Input Sample
 
