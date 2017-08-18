@@ -51,9 +51,9 @@ Used time: 1.938000 milliseconds.
 
 ### Performance
 
-sudoku.fast.cpp utilyzes bitwise operations to optimize the speed, yet there could be some compilation errors using old operating systems and/or old compilers. It uses avg **2.0 ms** (compiled with G++ 6.3.0 with -O3 flag) / 3.8 ms (compiled with GCC 6.3.0 with -O0 flag) to solve **evil-level** problem sets generated on www.websudoku.com with Ubuntu 16.04 on a single-core 2.0GHz 64-bit Skylake Xeon CPU.
+sudoku.fast.cpp utilyzes bitwise operations to optimize the speed, yet there could be some compilation errors using old operating systems and/or old compilers. It uses avg **2.0 ms** (compiled with G++ 6.3.0 with -O3 flag) / 3.8 ms (compiled with G++ 6.3.0 with -O0 flag) to solve **evil-level** problem sets generated on www.websudoku.com with Ubuntu 16.04 on a single-core 2.0GHz 64-bit Skylake Xeon CPU.
 
-If you do encounter such errors, please compile using sudoku.legacy.cpp, which should be compatible with most of the OSs and compilers. It uses avg 3.0 ms (compiled with G++ 6.3.0 with -O3 flag) / 6.5 ms (compiled with GCC 6.3.0 with -O0 flag) to solve evil-level problem sets generated on www.websudoku.com with Ubuntu 16.04 on a single-core 2.0GHz 64-bit Skylake Xeon CPU.
+If you do encounter such errors, please compile using sudoku.legacy.cpp, which should be compatible with most of the OSs and compilers. It uses avg 3.0 ms (compiled with G++ 6.3.0 with -O3 flag) / 6.5 ms (compiled with G++ 6.3.0 with -O0 flag) to solve evil-level problem sets generated on www.websudoku.com with Ubuntu 16.04 on a single-core 2.0GHz 64-bit Skylake Xeon CPU.
 
 More detailed testing results will be added in the future.
 
