@@ -1,7 +1,7 @@
 Sudoku
 ------
 
-A highly efficient sudoku-solving program, open sourced under [CC0 1.0 Universal License (Public Domain)](LICENSE.md).
+A sudoku-solving program using highly-optimized DFS algorithm, open sourced under [CC0 1.0 Universal License (Public Domain)](LICENSE.md).
 
 ### Input Sample
 
