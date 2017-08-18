@@ -19,7 +19,7 @@ int x[128];
 clock_t t1, t2;
 board used[9];
 
-const int inv_left[128] = {72, 72, 72, 72, 72, 72, 72, 72, 72,
+const int row_offset[81] = {72, 72, 72, 72, 72, 72, 72, 72, 72,
     63, 63, 63, 63, 63, 63, 63, 63, 63,
     54, 54, 54, 54, 54, 54, 54, 54, 54,
     45, 45, 45, 45, 45, 45, 45, 45, 45,
@@ -28,7 +28,8 @@ const int inv_left[128] = {72, 72, 72, 72, 72, 72, 72, 72, 72,
     18, 18, 18, 18, 18, 18, 18, 18, 18,
     9, 9, 9, 9, 9, 9, 9, 9, 9,
     0, 0, 0, 0, 0, 0, 0, 0, 0};
-const int up[128] = {0, 1, 2, 3, 4, 5, 6, 7, 8,
+
+const int column_offset[81] = {0, 1, 2, 3, 4, 5, 6, 7, 8,
     0, 1, 2, 3, 4, 5, 6, 7, 8,
     0, 1, 2, 3, 4, 5, 6, 7, 8,
     0, 1, 2, 3, 4, 5, 6, 7, 8,
@@ -37,7 +38,8 @@ const int up[128] = {0, 1, 2, 3, 4, 5, 6, 7, 8,
     0, 1, 2, 3, 4, 5, 6, 7, 8,
     0, 1, 2, 3, 4, 5, 6, 7, 8,
     0, 1, 2, 3, 4, 5, 6, 7, 8};
-const int inv_corner[128] = {60, 60, 60, 57, 57, 57, 54, 54, 54,
+
+const int block_offset[81] = {60, 60, 60, 57, 57, 57, 54, 54, 54,
     60, 60, 60, 57, 57, 57, 54, 54, 54,
     60, 60, 60, 57, 57, 57, 54, 54, 54,
     33, 33, 33, 30, 30, 30, 27, 27, 27,
@@ -47,26 +49,23 @@ const int inv_corner[128] = {60, 60, 60, 57, 57, 57, 54, 54, 54,
     6, 6, 6, 3, 3, 3, 0, 0, 0,
     6, 6, 6, 3, 3, 3, 0, 0, 0};
 
+int print_appends[81] = {32, 32, 9, 32, 32, 9, 32, 32, 10,
+    32, 32, 9, 32, 32, 9, 32, 32, 10,
+    32, 32, 9, 32, 32, 9, 32, 32, 0,
+    32, 32, 9, 32, 32, 9, 32, 32, 10,
+    32, 32, 9, 32, 32, 9, 32, 32, 10,
+    32, 32, 9, 32, 32, 9, 32, 32, 0,
+    32, 32, 9, 32, 32, 9, 32, 32, 10,
+    32, 32, 9, 32, 32, 9, 32, 32, 10,
+    32, 32, 9, 32, 32, 9, 32, 32, 10};
+
 void printBoard(board num);
-
-inline void setHorizontal(board *num, int x) {
-    *num |= ROW_MASK << x;
-}
-
-inline void setVertical(board *num, int x) {
-    *num |= COLUMN_MASK >> x;
-}
-
-inline void setBlock(board *num, int x) {
-    *num |= BLOCK_MASK << x;
-}
 
 inline void analyzeUsed(int i)
 {
-    board *current = &used[x[i]];
-    setHorizontal(current, inv_left[i]);
-    setVertical(current, up[i]);
-    setBlock(current, inv_corner[i]);
+    used[x[i]] |= (ROW_MASK << row_offset[i])
+        | (COLUMN_MASK >> column_offset[i])
+        | (BLOCK_MASK << block_offset[i]);
 }
 
 char *revstr(char *str)
@@ -94,17 +93,8 @@ void printBoard(board num) {
     char tmp[200];
     char prt[500];
     memset(prt, 0, sizeof(prt));
-    for (int i=0 ; i< 64 ; ) {
-        for (int j = 0 ; j < 9 && i < 64 ; ++j, ++i)
-        {
-            sprintf(prt, "%s %llu", prt, low & 0x1);
-            low >>= 1;
-        }
-        if (i != 64) {
-            strcat(prt, "\n");
-        }
-    }
-    for (int i = 0 ; i< 17 ; ) {
+    for (int i = 0 ; i < 17 ; )
+    {
         for (int j = 0 ; j < 9 && i < 17 ; ++j, ++i)
         {
             if (i == 0)
@@ -117,7 +107,7 @@ void printBoard(board num) {
     printf("%s\n\n", revstr(prt));
 }
 
-inline __int128 int128pow(int i)
+inline __int128 boardPow(int i)
 {
     __int128 ret = 1;
     return ret << (80 - i);
@@ -127,14 +117,15 @@ void DFS( int i )
 {
     if ( i == 81 )
     {
-        for ( int k = 0 ; k < 81 ; k+=9 )
+        for (int *i = &x[0], *ending = i + 81, *pr_append = &print_appends[0]; i < ending; ++i, ++pr_append)
         {
-            for ( int l = k ; l < k+9 ; l++ )
+            putchar_unlocked(*i + '1');
+            if (*pr_append == 0)
             {
-                putchar_unlocked(x[l] + '1');
-                putchar_unlocked(' ');
-            }
-            putchar_unlocked('\n');
+                putchar_unlocked(10);
+                putchar_unlocked(10);
+            } else
+                putchar_unlocked(*pr_append);
         }
         t2 = clock();
         float diff = ((float)(t2 - t1) / 1000000.0F ) * 1000;
@@ -149,7 +140,7 @@ void DFS( int i )
     board *cur = &used[0];
     for ( int k = 0 ; k < 9 ; ++k, ++cur )
     {
-        if (((*cur) & int128pow(i)) == 0)
+        if (((*cur) & boardPow(i)) == 0)
         {
             x[i] = k;
             board tmp[9];
@@ -177,8 +168,8 @@ int main(int argc, const char *argv[])
     COLUMN_MASK += 0x4020100804020100ULL;
     memset(x, -1, sizeof(x));
     char buffer;
-    for ( int i = 0 ; i < 81 ; i++ )
-        for(fread(&buffer, sizeof(char), 1, stdin); (x[i] = getNumber(buffer)) == -2; fread(&buffer, sizeof(char), 1, stdin));
+    for ( int *i = &x[0], *ending = i + 81 ; i < ending ; ++i )
+        for(fread(&buffer, sizeof(char), 1, stdin); (*i = getNumber(buffer)) == -2; fread(&buffer, sizeof(char), 1, stdin));
     putchar_unlocked('\n');
     t1 = clock();
     for (int i = 0 ; i < 81 ; ++i)
