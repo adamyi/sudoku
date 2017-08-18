@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <bitset>
 
 #ifdef WIN32 //putchar_unlocked does not exist in windows
 #define putchar_unlocked putchar
